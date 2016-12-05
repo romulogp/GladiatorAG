@@ -1,0 +1,35 @@
+Entrada de Dados: 
+	Quantidade de individuos na geração inicial;
+	Quantidade de gerações.
+
+Codificação dos Individuos:
+	Vida: pontos
+	Ataque: pontos
+	Defesa: porcentagem de defesa
+	Destreza: chance de esquiva
+	
+Gerar população inicial:
+	A quantidade de indivíduos gerados depende da entrada;
+	Randomizar a ordem do preenchimento dos atributos;
+	Randomizar os valores dos atributos de 0 a 100, decrescendo conforme os atributos que forem preenchidos.
+
+Avaliar população:
+	Serão simulados duelos entre todos os indivíduos da população, ou seja, todos contra todos;
+	Serão contabilizadas as vitórias de cada indivíduo.
+
+Reprodução
+	Ao término dos duelos, será feita a avaliação de aptidão de cada indivíduo, através do método
+	da roleta, para seleção dos dois indivíduos que serão utilizados para a geração de dois novos indivíduos;
+	Após realizar o cruzamento, há uma chance de 5% dos indivíduos filhos sofrerem mutação: Quando ocorrer a mutação, há uma chance
+	de dobrar ou reduzir pela metade os pontos de um dos atributos
+
+Nova população:
+	Após realizar a mutação, o indivíduo pai com o maior número de vitórias prevalecerá para a próxima geração além dos demais;
+	Incrementar geração.
+
+Critério de parada:
+	Pela quantidade de gerações máxima definida na entrada ou a quantidade de vitórias de um indivíduo alcançar o ponto parada
+	definido na entrada.
+
+Imprimir melhor solução:
+	Imprimir melhor solução ordenada pelo número de vitórias.

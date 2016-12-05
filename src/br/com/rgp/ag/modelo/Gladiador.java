@@ -31,6 +31,10 @@ public class Gladiador {
     this.vitorias = vitorias;
   }
 
+  public int fitness() {
+    return getPontos();
+  }
+  
   public void atacar(Gladiador oponente) {
     System.out.println(this.nome + " atacou " + oponente.getNome());
     oponente.defender(this);
@@ -63,7 +67,7 @@ public class Gladiador {
     return vida.value() > 0;
   }
 
-  private void renascer() {
+  public void renascer() {
     this.vida = new Atributo(VIDA_DEFAULT.value());
   }
 
@@ -129,6 +133,14 @@ public class Gladiador {
     this.destreza = destreza;
   }
 
+  public int getVitorias() {
+      return vitorias;
+  }
+  
+  public void setVitorias(int vitorias) {
+      this.vitorias = vitorias;
+  }
+  
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();

@@ -23,18 +23,29 @@ public class Duelo {
   }
   
   public void iniciarDuelo() {
+    System.out.println(g1);
+    System.out.println(g2);
+    
     Gladiador gladiadorDaVez = g1;
     Gladiador adversarioDaVez = g2;
-    while (g1.estaVivo() && g2.estaVivo()) {
+    
+    while (vencedor == null) {
+      System.out.println("--> Vez de " + gladiadorDaVez.getNome());
       gladiadorDaVez.atacar(adversarioDaVez);
       
       gladiadorDaVez = (gladiadorDaVez == g1) ? g2 : g1;
       adversarioDaVez = (adversarioDaVez == g1) ? g2 : g1;
       
       vencedor = !g1.estaVivo() ? g2 : !g2.estaVivo() ? g1 : null;
-      System.out.println("");
     }
-    System.out.println("Vencedor: " + vencedor.getNome());
+    vencedor.setVitorias(vencedor.getVitorias() + 1);
+    System.out.println("\n*** " + g1.getNome() + "  vs  " + g2.getNome() + "  =  " + vencedor.getNome() + " *** \n");
+    g1.renascer();
+    g2.renascer();
+  }
+  
+  public Gladiador getVencedor() {
+    return vencedor;
   }
   
   public static void main(String[] args) {

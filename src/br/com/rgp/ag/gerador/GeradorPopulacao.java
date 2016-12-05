@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GeradorPopulacao {
   
-  public static List<Gladiador> gerar(int populacaoTotal) {
+  public static List<Gladiador> gerarPopulacao(int populacaoTotal) {
     List<Gladiador> populacao = new ArrayList<>();
     for (int i = 0; i < populacaoTotal; i++) {
       Gladiador gladiador = GeradorGladiador.obterGladiadorAleatoriamente();

@@ -1,6 +1,6 @@
 package br.com.rgp.ag;
 
-import br.com.rgp.ag.gerador.GeradorPopulacao;
+import br.com.rgp.ag.geradores.GeradorPopulacao;
 import br.com.rgp.ag.modelo.AlgoritmoGenetico;
 import br.com.rgp.ag.modelo.Gladiador;
 import java.util.List;
@@ -23,7 +23,7 @@ public class RunApplication {
 //      }
 //      System.out.println("");
 //    }
-    AlgoritmoGenetico ag = new AlgoritmoGenetico(10, 3);
+    AlgoritmoGenetico ag = new AlgoritmoGenetico(10, 2);
     ag.executar();
   }
 }

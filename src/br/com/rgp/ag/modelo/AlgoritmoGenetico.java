@@ -1,6 +1,7 @@
 package br.com.rgp.ag.modelo;
 
-import br.com.rgp.ag.gerador.GeradorPopulacao;
+import br.com.rgp.ag.geradores.GeradorPopulacao;
+import br.com.rgp.ag.metodos.MetodoRoleta;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,9 @@ import java.util.List;
  */
 public class AlgoritmoGenetico {
   
-  private Gladiador melhorCandidato = new Gladiador();
+  private final int maxGeracoes;
+  private final Gladiador melhorCandidato = new Gladiador();
   
-  private int maxGeracoes;
   private List<Gladiador> populacao = new ArrayList<>();
   
   public AlgoritmoGenetico(int maxGeracoes, int tamPopulacao) {
@@ -28,11 +29,15 @@ public class AlgoritmoGenetico {
               + "****************************************************");
       Arena arena = new Arena(populacao);
       arena.iniciarDuelos();
+      
+      List<Gladiador> pais = MetodoRoleta.rodar(populacao, 2);
       System.out.println("----------------------------------------------------"
               + "\n *** Gladiador com maior número de vitórias: " + arena.getVencedor().getNome() + " ***\n"
               + "----------------------------------------------------");
       geracaoAtual++;
     }
   }
+  
+  
   
 }

@@ -1,7 +1,7 @@
 package br.com.rgp.ag.modelo;
 
-import br.com.rgp.ag.gerador.GeradorAleatoriedade;
-import br.com.rgp.ag.gerador.GeradorGladiador;
+import br.com.rgp.ag.geradores.GeradorAleatoriedade;
+import br.com.rgp.ag.geradores.GeradorGladiador;
 
 public class Duelo {
 

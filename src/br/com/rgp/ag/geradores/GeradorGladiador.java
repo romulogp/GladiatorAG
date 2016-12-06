@@ -1,4 +1,4 @@
-package br.com.rgp.ag.gerador;
+package br.com.rgp.ag.geradores;
 
 import br.com.rgp.ag.modelo.Atributo;
 import br.com.rgp.ag.modelo.Gladiador;

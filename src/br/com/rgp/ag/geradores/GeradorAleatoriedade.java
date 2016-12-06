@@ -1,4 +1,4 @@
-package br.com.rgp.ag.gerador;
+package br.com.rgp.ag.geradores;
 
 import java.util.Random;
 

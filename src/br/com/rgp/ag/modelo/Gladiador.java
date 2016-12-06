@@ -31,8 +31,8 @@ public class Gladiador {
     this.vitorias = vitorias;
   }
 
-  public int fitness() {
-    return getPontos();
+  public double fitness(int total) {
+    return vitorias / (double) total;
   }
   
   public void atacar(Gladiador oponente) {

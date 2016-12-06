@@ -18,14 +18,16 @@ public class Arena {
   }
   
   public Gladiador getVencedor() {
-    if (duelos.size() == 0) {
+    if (duelos.isEmpty()) {
       return null;
     }
     Gladiador vencedor = new Gladiador();
     for (Duelo d : duelos) {
       if (d.getVencedor() != null) {
+        // O vencedor é definido por aquele que tiver maior número de vitórias
+        // Obs.: O termo de desempate é o somatório dos atributos
         if (d.getVencedor().getVitorias() > vencedor.getVitorias()
-                || d.getVencedor().fitness() > vencedor.fitness()) {
+                || d.getVencedor().getPontos() > vencedor.getPontos()) {
           vencedor = d.getVencedor();
         }
       }

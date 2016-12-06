@@ -1,4 +1,4 @@
-package br.com.rgp.ag.gerador;
+package br.com.rgp.ag.geradores;
 
 import br.com.rgp.ag.modelo.Gladiador;
 import java.util.ArrayList;
@@ -16,5 +16,6 @@ public class GeradorPopulacao {
     System.out.println("Nova População gerada com " + populacao.size() + " integrantes.");
     return populacao;
   }
+  
   
 }

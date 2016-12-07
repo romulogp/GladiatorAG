@@ -69,7 +69,8 @@ public class Individuo {
   }
 
   public boolean sofrerMutacao() {
-    return GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 100) <= 10;
+    int chanceMutacao = 10;
+    return GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 100) <= chanceMutacao;
   }
   
   public void mutar() {
@@ -86,7 +87,7 @@ public class Individuo {
       System.out.print(" para " + attr.getValor());
     } else {
       System.out.print(" para PIOR e teve seu atributo alterado de " + attr.getValor());
-      attr.setValor((int) (attr.getValor() / 2.0));
+      attr.setValor(attr.getValor() / 2);
       System.out.print(" para " + attr.getValor() + "\n");
     }
   }

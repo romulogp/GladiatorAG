@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Individuo {
-
+  
   private static final int MIN_ATRIB_VALUE = 10;
-
+  
   private String nome;
   private Atributo vida;
   private Atributo ataque;
   private Atributo defesa;
   private Atributo destreza;
   private int vitorias;
+  private int geracao;
 
   private Atributo VIDA_DEFAULT;
 
@@ -22,15 +23,17 @@ public class Individuo {
     ataque = new Atributo(MIN_ATRIB_VALUE);
     defesa = new Atributo(MIN_ATRIB_VALUE);
     destreza = new Atributo(MIN_ATRIB_VALUE);
+    geracao = 1;
     fixarAtributosDefault();
   }
 
-  public Individuo(Atributo vida, Atributo ataque, Atributo defesa, Atributo destreza, int vitorias) {
+  public Individuo(Atributo vida, Atributo ataque, Atributo defesa, Atributo destreza, int vitorias, int geracao) {
     this.vida = vida;
     this.ataque = ataque;
     this.defesa = defesa;
     this.destreza = destreza;
     this.vitorias = vitorias;
+    this.geracao = geracao;
     fixarAtributosDefault();
   }
 
@@ -41,19 +44,23 @@ public class Individuo {
             new Atributo(this.ataque.getValor()),
             new Atributo(pai2.defesa.getValor()),
             new Atributo(pai2.destreza.getValor()),
-            0);
+            0,
+            new Integer(AlgoritmoGenetico.geracaoAtual));
     Individuo filho2 = new Individuo(
             new Atributo(pai2.vida.getValor()),
             new Atributo(pai2.ataque.getValor()),
             new Atributo(this.defesa.getValor()),
             new Atributo(this.destreza.getValor()),
-            0);
-    filho1.setNome(String.valueOf("f" + this.getNome().charAt(0) + '_' + pai2.getNome().charAt(0)));
-    filho2.setNome(String.valueOf("f" + pai2.getNome().charAt(0)) + '_' + this.getNome().charAt(0));
+            0,
+            new Integer(AlgoritmoGenetico.geracaoAtual));
+    filho1.setNome(String.valueOf(++AlgoritmoGenetico.individuosGerados));
+    filho2.setNome(String.valueOf(++AlgoritmoGenetico.individuosGerados));
+    
     filhos.add(filho1);
     filhos.add(filho2);
     
     for (Individuo f : filhos) {
+      System.out.println(this.getNome() + " cruzou com " + pai2.getNome() + " e geraram " + f.getNome());
       if (sofrerMutacao()) {
         f.mutar();
       }
@@ -69,19 +76,23 @@ public class Individuo {
     // qual atributo sofrerá a mutação?
     Atributo attr = getAtributos().get(GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, this.getAtributos().size() - 1));
     
-    // para bem ou mal?
+    System.out.print("\n" + this.getNome() + " sofreu uma mutação");
+    
+    // para melhor ou pior?
     boolean mutarParaMelhor = GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 100) > 50;
     if (mutarParaMelhor) {
+      System.out.print(" para MELHOR e teve seu atributo alterado de " + attr.getValor());
       attr.setValor(attr.getValor() * 2);
-      System.out.println("Mutou para melhor.");
+      System.out.print(" para " + attr.getValor());
     } else {
+      System.out.print(" para PIOR e teve seu atributo alterado de " + attr.getValor());
       attr.setValor((int) (attr.getValor() / 2.0));
-      System.out.println("Mutou para pior.");
+      System.out.print(" para " + attr.getValor() + "\n");
     }
   }
   
-  public double fitness(int total) {
-    return vitorias / (double) total;
+  public double fitness() {
+    return getPontos();
   }
 
   public void atacar(Individuo oponente) {
@@ -98,7 +109,7 @@ public class Individuo {
             + " com intensidade de " + intensidade + " pontos de vida, deixando-o com "
             + oponente.getVida() + " pontos de vida");
   }
-
+  
   /**
    * <p>
    * Soma-se os pontos de ataque do atacante com os pontos de defesa gladiador a
@@ -108,12 +119,21 @@ public class Individuo {
    * @param atacante gladiador que realizará o ataque
    */
   public void defender(Individuo atacante) {
-    System.out.println(this.nome + " se defendeu contra " + atacante.getNome());
+    if (esquivar()) {
+      System.out.println(this.nome + " esquivou-se de " + atacante.getNome());
+      return;
+    }
     double reducao = (this.getDefesa().getValor() / (double) (this.getDefesa().getValor() + atacante.getAtaque().getValor()));
-    double danoFinal = atacante.getAtaque().getValor() * reducao;
+    double danoFinal = Math.round(atacante.getAtaque().getValor() * (1 - reducao));
+    System.out.println(this.nome + " defendeu " + (atacante.getAtaque().getValor() - danoFinal) + " pontos de " + atacante.getNome());
     atacante.atingir(this, (int) Math.round(danoFinal));
   }
 
+  public boolean esquivar() {
+    int chanceEsquiva = (int) (getDestreza().getValor() * 0.25);
+    return GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 100) <= chanceEsquiva;
+  }
+  
   public boolean estaVivo() {
     return vida.getValor() > 0;
   }
@@ -192,14 +212,20 @@ public class Individuo {
     this.vitorias = vitorias;
   }
 
+  public int getGeracaoCriacao() {
+    return geracao;
+  }
+  
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
-    builder.append("\nGladiador ").append(nome)
+    builder.append("Nome: ").append(nome)
             .append("\nVida: ").append(vida)
             .append("\nAtaque: ").append(ataque)
             .append("\nDefesa: ").append(defesa)
-            .append("\nDestreza: ").append(destreza);
+            .append("\nDestreza: ").append(destreza)
+            .append("\nVitórias: ").append(vitorias)
+            .append("\nGeração: ").append(geracao);
     return builder.toString();
   }
 

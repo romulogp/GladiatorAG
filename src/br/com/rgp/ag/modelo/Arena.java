@@ -42,13 +42,14 @@ public class Arena {
         duelos.add(new Duelo(oponentes.get(i), oponentes.get(j)));
       }
     }
-    System.out.println("Gerado Quadro de Duelos, totalizando " + duelos.size() + " duelos.");
+    System.out.println("\n\t*Quadro de Duelos Gerado, totalizando " + duelos.size() + " duelos.");
   }
   
   private void inicializarVitorias(List<Individuo> populacao) {
     populacao.stream().forEach((i) -> {
       i.setVitorias(0);
     });
+    System.out.println("\t*Números de vitórias inicializados.");
   }
   
 }

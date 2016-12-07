@@ -13,7 +13,6 @@ public class GeradorPopulacao {
       gladiador.setNome(String.valueOf(i));
       populacao.add(gladiador);
     }
-    System.out.println("Nova População gerada com " + populacao.size() + " integrantes.");
     return populacao;
   }
   

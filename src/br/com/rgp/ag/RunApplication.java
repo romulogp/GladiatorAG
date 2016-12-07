@@ -15,15 +15,7 @@ public class RunApplication {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-//    List<Gladiador> populacao = GeradorPopulacao.gerarPopulacao(100);
-//    for (Gladiador p : populacao) {
-//      for (int i = 0; i < p.getPontos(); i++) {
-//        char block = '\u2588';
-//        System.out.print(block);
-//      }
-//      System.out.println("");
-//    }
-    AlgoritmoGenetico ag = new AlgoritmoGenetico(10, 2);
+    AlgoritmoGenetico ag = new AlgoritmoGenetico(20, 1000, 10);
     ag.executar();
   }
 }

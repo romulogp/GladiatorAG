@@ -1,17 +1,23 @@
 package br.com.rgp.ag.metodos;
 
 import br.com.rgp.ag.modelo.Individuo;
+import java.util.List;
 
 public class SelecaoNatural {
-
+  
   /**
    * 
-   * @param g1 
-   * @param g2
-   * @return o pior entre os 2 gladiadores
+   * @param populacao
+   * @return o individuo com o menor numero de vitorias e pontos
    */
-  public static Individuo selecionarInapto(Individuo g1, Individuo g2) {
-    return g1.getPontos() < g2.getPontos() ? g1 : g2;
+  public static Individuo selecionarInapto(List<Individuo> populacao) {
+    Individuo inapto = populacao.get(0);
+    for (Individuo i : populacao) {
+      if (i.getVitorias() < inapto.getVitorias() && i.fitness() < inapto.fitness()) {
+        inapto = i;
+      }
+    }
+    return inapto;
   }
   
 }

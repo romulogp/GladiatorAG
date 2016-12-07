@@ -29,13 +29,14 @@ public class MetodoRoleta {
     // Glad02: 6-7  (6,7)
     // Glad03: 8-10 (8,9,10)
     List<Individuo> candidatos = new ArrayList<>();
-    while (possiveisCandidatos.size() < maxCandidatos) {  
+    while (candidatos.size() < maxCandidatos) {  
       int randVal = GeradorAleatoriedade.gerarNumeroAleatorioEntre(1, valorMaximo);
       for (Individuo g : possiveisCandidatos) {
         if (randVal <= g.getVitorias()) {
           valorMaximo -= g.getVitorias();
           candidatos.add(g);
           possiveisCandidatos.remove(g);
+          break;
         }
         randVal -= g.getVitorias();
       }

@@ -14,7 +14,7 @@ public class Individuo {
   private Atributo defesa;
   private Atributo destreza;
   private int vitorias;
-  private int geracao;
+  private final int geracao;
 
   private Atributo VIDA_DEFAULT;
 
@@ -92,7 +92,7 @@ public class Individuo {
   }
   
   public double fitness() {
-    return getPontos();
+    return vitorias;
   }
 
   public void atacar(Individuo oponente) {

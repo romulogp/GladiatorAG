@@ -24,7 +24,7 @@ public class Duelo {
   
   public void iniciar() {
     System.out.println("\n---------------");
-    System.out.println("INICIALIZA DUELO...");
+    System.out.println("PRÓXIMO DUELO...");
     System.out.println(indiv1);
     System.out.println("   VS   ");
     System.out.println(indiv2);

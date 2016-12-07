@@ -1,9 +1,6 @@
 package br.com.rgp.ag;
 
-import br.com.rgp.ag.geradores.GeradorPopulacao;
 import br.com.rgp.ag.modelo.AlgoritmoGenetico;
-import br.com.rgp.ag.modelo.Individuo;
-import java.util.List;
 
 /**
  *
@@ -11,11 +8,15 @@ import java.util.List;
  */
 public class RunApplication {
 
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    AlgoritmoGenetico ag = new AlgoritmoGenetico(20, 1000, 10);
-    ag.executar();
-  }
+    private static final int MINIMO_VITORIAS = 20;
+    private static final int MAX_GERACOES = 100;
+    private static final int POPULACAO_INICIAL = 10;
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        AlgoritmoGenetico ag = new AlgoritmoGenetico(MINIMO_VITORIAS, MAX_GERACOES, POPULACAO_INICIAL);
+        ag.executar();
+    }
 }

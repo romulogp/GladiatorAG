@@ -13,7 +13,7 @@ public class SelecaoNatural {
   public static Individuo selecionarInapto(List<Individuo> populacao) {
     Individuo inapto = populacao.get(0);
     for (Individuo i : populacao) {
-      if (i.getVitorias() < inapto.getVitorias() && i.fitness() < inapto.fitness()) {
+      if (i.getPontos() < inapto.getPontos()&& i.fitness() < inapto.fitness()) {
         inapto = i;
       }
     }

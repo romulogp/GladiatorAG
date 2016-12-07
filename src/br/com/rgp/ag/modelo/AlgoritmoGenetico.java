@@ -35,10 +35,8 @@ public class AlgoritmoGenetico {
                 "********************************************************************************************************"
               + "\n ||| " + geracaoAtual + "ª GERAÇÃO ||| \n"
               + "********************************************************************************************************");
-      for (Individuo ind : populacao) {
-        System.out.println(ind);
-        System.out.println("---------------");
-      }
+      
+      exibePopulacao();
       
       Arena arena = new Arena(populacao);
       arena.iniciarDuelos();
@@ -74,6 +72,13 @@ public class AlgoritmoGenetico {
               + "\n\t   > Defesa: " + melhorCandidato.getDefesa().getValor()
               + "\n\t   > Destreza: " + melhorCandidato.getDestreza().getValor()
               + "\n----------------------------------------------------");
+  }
+  
+  private void exibePopulacao() {
+    for (Individuo ind : populacao) {
+      System.out.println(ind);
+      System.out.println("---------------");
+    }
   }
   
   private void encontraMelhorCandidato() {

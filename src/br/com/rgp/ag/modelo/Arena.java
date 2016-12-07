@@ -7,21 +7,22 @@ public class Arena {
 
   private final List<Duelo> duelos = new ArrayList<>();
   
-  public Arena(List<Gladiador> oponentes) {
+  public Arena(List<Individuo> oponentes) {
     gerarQuadroDeDuelos(oponentes);
+    inicializarVitorias(oponentes);
   }
   
   public void iniciarDuelos() {
     duelos.stream().forEach((d) -> {
-      d.iniciarDuelo();
+      d.iniciar();
     });
   }
   
-  public Gladiador getVencedor() {
+  public Individuo getVencedor() {
     if (duelos.isEmpty()) {
       return null;
     }
-    Gladiador vencedor = new Gladiador();
+    Individuo vencedor = new Individuo();
     for (Duelo d : duelos) {
       if (d.getVencedor() != null) {
         // O vencedor é definido por aquele que tiver maior número de vitórias
@@ -35,13 +36,19 @@ public class Arena {
     return vencedor;
   }
   
-  private void gerarQuadroDeDuelos(List<Gladiador> oponentes) {
+  private void gerarQuadroDeDuelos(List<Individuo> oponentes) {
     for (int i = 0; i < oponentes.size() - 1; i++) {
       for (int j = i + 1; j < oponentes.size(); j++) {
         duelos.add(new Duelo(oponentes.get(i), oponentes.get(j)));
       }
     }
     System.out.println("Gerado Quadro de Duelos, totalizando " + duelos.size() + " duelos.");
+  }
+  
+  private void inicializarVitorias(List<Individuo> populacao) {
+    populacao.stream().forEach((i) -> {
+      i.setVitorias(0);
+    });
   }
   
 }

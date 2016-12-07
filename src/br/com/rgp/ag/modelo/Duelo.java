@@ -5,10 +5,10 @@ import br.com.rgp.ag.geradores.GeradorGladiador;
 
 public class Duelo {
 
-  private final Gladiador g1;
-  private final Gladiador g2;
+  private final Individuo g1;
+  private final Individuo g2;
   
-  private Gladiador vencedor;
+  private Individuo vencedor;
   
   /**
    * <p>Construtor da classe que define quais são os oponentes e quem iniciará 
@@ -16,18 +16,18 @@ public class Duelo {
    * @param oponente1
    * @param oponente2 
    */
-  public Duelo(Gladiador oponente1, Gladiador oponente2) {
+  public Duelo(Individuo oponente1, Individuo oponente2) {
     int iniciante = GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 1);
     g1 = (iniciante == 0) ? oponente1 : oponente2;
     g2 = (iniciante == 0) ? oponente2 : oponente1;
   }
   
-  public void iniciarDuelo() {
+  public void iniciar() {
     System.out.println(g1);
     System.out.println(g2);
     
-    Gladiador gladiadorDaVez = g1;
-    Gladiador adversarioDaVez = g2;
+    Individuo gladiadorDaVez = g1;
+    Individuo adversarioDaVez = g2;
     
     while (vencedor == null) {
       System.out.println("--> Vez de " + gladiadorDaVez.getNome());
@@ -44,22 +44,22 @@ public class Duelo {
     g2.renascer();
   }
   
-  public Gladiador getVencedor() {
+  public Individuo getVencedor() {
     return vencedor;
   }
   
   public static void main(String[] args) {
-    Gladiador op1 = GeradorGladiador.obterGladiadorAleatoriamente();
+    Individuo op1 = GeradorGladiador.obterGladiadorAleatoriamente();
     op1.setNome("Oponente1");
     System.out.println(op1);
     
-    Gladiador op2 = GeradorGladiador.obterGladiadorAleatoriamente();
+    Individuo op2 = GeradorGladiador.obterGladiadorAleatoriamente();
     op2.setNome("Oponente2");
     System.out.println(op2);
     
     System.out.println("");
     Duelo d = new Duelo(op1, op2);
-    d.iniciarDuelo();
+    d.iniciar();
   }
   
 }

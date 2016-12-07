@@ -1,15 +1,15 @@
 package br.com.rgp.ag.geradores;
 
-import br.com.rgp.ag.modelo.Gladiador;
+import br.com.rgp.ag.modelo.Individuo;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GeradorPopulacao {
   
-  public static List<Gladiador> gerarPopulacao(int populacaoTotal) {
-    List<Gladiador> populacao = new ArrayList<>();
+  public static List<Individuo> gerarPopulacao(int populacaoTotal) {
+    List<Individuo> populacao = new ArrayList<>();
     for (int i = 0; i < populacaoTotal; i++) {
-      Gladiador gladiador = GeradorGladiador.obterGladiadorAleatoriamente();
+      Individuo gladiador = GeradorGladiador.obterGladiadorAleatoriamente();
       gladiador.setNome(String.valueOf(i));
       populacao.add(gladiador);
     }

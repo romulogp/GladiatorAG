@@ -2,7 +2,7 @@ package br.com.rgp.ag;
 
 import br.com.rgp.ag.geradores.GeradorPopulacao;
 import br.com.rgp.ag.modelo.AlgoritmoGenetico;
-import br.com.rgp.ag.modelo.Gladiador;
+import br.com.rgp.ag.modelo.Individuo;
 import java.util.List;
 
 /**

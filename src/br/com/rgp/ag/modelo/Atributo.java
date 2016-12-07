@@ -13,7 +13,7 @@ public class Atributo {
     return String.valueOf(this.valor);
   }
   
-  public int value() {
+  public int getValor() {
     return valor;
   }
 

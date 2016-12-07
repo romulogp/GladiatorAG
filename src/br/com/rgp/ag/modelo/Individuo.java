@@ -1,9 +1,10 @@
 package br.com.rgp.ag.modelo;
 
+import br.com.rgp.ag.geradores.GeradorAleatoriedade;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gladiador {
+public class Individuo {
 
   private static final int MIN_ATRIB_VALUE = 10;
 
@@ -16,32 +17,80 @@ public class Gladiador {
 
   private Atributo VIDA_DEFAULT;
 
-  public Gladiador() {
+  public Individuo() {
     vida = new Atributo(MIN_ATRIB_VALUE);
     ataque = new Atributo(MIN_ATRIB_VALUE);
     defesa = new Atributo(MIN_ATRIB_VALUE);
     destreza = new Atributo(MIN_ATRIB_VALUE);
+    fixarAtributosDefault();
   }
 
-  public Gladiador(Atributo vida, Atributo ataque, Atributo defesa, Atributo destreza, int vitorias) {
+  public Individuo(Atributo vida, Atributo ataque, Atributo defesa, Atributo destreza, int vitorias) {
     this.vida = vida;
     this.ataque = ataque;
     this.defesa = defesa;
     this.destreza = destreza;
     this.vitorias = vitorias;
+    fixarAtributosDefault();
   }
 
+  public List<Individuo> cruzar(Individuo pai2) {
+    List<Individuo> filhos = new ArrayList<>();
+    Individuo filho1 = new Individuo(
+            new Atributo(this.vida.getValor()),
+            new Atributo(this.ataque.getValor()),
+            new Atributo(pai2.defesa.getValor()),
+            new Atributo(pai2.destreza.getValor()),
+            0);
+    Individuo filho2 = new Individuo(
+            new Atributo(pai2.vida.getValor()),
+            new Atributo(pai2.ataque.getValor()),
+            new Atributo(this.defesa.getValor()),
+            new Atributo(this.destreza.getValor()),
+            0);
+    filho1.setNome(String.valueOf("f" + this.getNome().charAt(0) + '_' + pai2.getNome().charAt(0)));
+    filho2.setNome(String.valueOf("f" + pai2.getNome().charAt(0)) + '_' + this.getNome().charAt(0));
+    filhos.add(filho1);
+    filhos.add(filho2);
+    
+    for (Individuo f : filhos) {
+      if (sofrerMutacao()) {
+        f.mutar();
+      }
+    }
+    return filhos;
+  }
+
+  public boolean sofrerMutacao() {
+    return GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 100) <= 10;
+  }
+  
+  public void mutar() {
+    // qual atributo sofrerá a mutação?
+    Atributo attr = getAtributos().get(GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, this.getAtributos().size() - 1));
+    
+    // para bem ou mal?
+    boolean mutarParaMelhor = GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, 100) > 50;
+    if (mutarParaMelhor) {
+      attr.setValor(attr.getValor() * 2);
+      System.out.println("Mutou para melhor.");
+    } else {
+      attr.setValor((int) (attr.getValor() / 2.0));
+      System.out.println("Mutou para pior.");
+    }
+  }
+  
   public double fitness(int total) {
     return vitorias / (double) total;
   }
-  
-  public void atacar(Gladiador oponente) {
+
+  public void atacar(Individuo oponente) {
     System.out.println(this.nome + " atacou " + oponente.getNome());
     oponente.defender(this);
   }
 
-  public void atingir(Gladiador oponente, int intensidade) {
-    int vidaAtual = oponente.getVida().value();
+  public void atingir(Individuo oponente, int intensidade) {
+    int vidaAtual = oponente.getVida().getValor();
     oponente.getVida().setValor(vidaAtual - intensidade > 0
             ? vidaAtual - intensidade : 0);
 
@@ -51,24 +100,26 @@ public class Gladiador {
   }
 
   /**
-   * <p>Soma-se os pontos de ataque do atacante com os pontos de defesa gladiador a
+   * <p>
+   * Soma-se os pontos de ataque do atacante com os pontos de defesa gladiador a
    * se defender, então divide-se a defesa do defensor pelo resultado para obter
    * a porcentagem de redução no dano a ser causado pelo atacante.</p>
+   *
    * @param atacante gladiador que realizará o ataque
    */
-  public void defender(Gladiador atacante) {
+  public void defender(Individuo atacante) {
     System.out.println(this.nome + " se defendeu contra " + atacante.getNome());
-    double reducao = (this.getDefesa().value() / (double) (this.getDefesa().value() + atacante.getAtaque().value()));
-    double danoFinal = atacante.getAtaque().value() * reducao;
+    double reducao = (this.getDefesa().getValor() / (double) (this.getDefesa().getValor() + atacante.getAtaque().getValor()));
+    double danoFinal = atacante.getAtaque().getValor() * reducao;
     atacante.atingir(this, (int) Math.round(danoFinal));
   }
 
   public boolean estaVivo() {
-    return vida.value() > 0;
+    return vida.getValor() > 0;
   }
 
   public void renascer() {
-    this.vida = new Atributo(VIDA_DEFAULT.value());
+    this.vida = new Atributo(VIDA_DEFAULT.getValor());
   }
 
   /**
@@ -85,12 +136,12 @@ public class Gladiador {
 
   public int getPontos() {
     int total = 0;
-    total = getAtributos().stream().map((attr) -> attr.value()).reduce(total, Integer::sum);
+    total = getAtributos().stream().map((attr) -> attr.getValor()).reduce(total, Integer::sum);
     return total;
   }
 
-  public void fixarAtributosDefault() {
-    this.VIDA_DEFAULT = new Atributo(vida.value());
+  public final void fixarAtributosDefault() {
+    this.VIDA_DEFAULT = new Atributo(vida.getValor());
   }
 
   public String getNome() {
@@ -134,13 +185,13 @@ public class Gladiador {
   }
 
   public int getVitorias() {
-      return vitorias;
+    return vitorias;
   }
-  
+
   public void setVitorias(int vitorias) {
-      this.vitorias = vitorias;
+    this.vitorias = vitorias;
   }
-  
+
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
@@ -151,5 +202,5 @@ public class Gladiador {
             .append("\nDestreza: ").append(destreza);
     return builder.toString();
   }
-  
+
 }

@@ -1,7 +1,7 @@
 package br.com.rgp.ag.geradores;
 
 import br.com.rgp.ag.modelo.Atributo;
-import br.com.rgp.ag.modelo.Gladiador;
+import br.com.rgp.ag.modelo.Individuo;
 import java.util.List;
 
 public class GeradorGladiador {
@@ -13,8 +13,8 @@ public class GeradorGladiador {
    * <p>Um atributo poderá ser de 0 a 100</p>
    * @return gladiador gerado aleatoriamente.
    */
-  public static Gladiador obterGladiadorAleatoriamente() {
-    Gladiador g = new Gladiador();
+  public static Individuo obterGladiadorAleatoriamente() {
+    Individuo g = new Individuo();
     List<Atributo> atributos = g.getAtributos();
     
     int pontosDistribuiveis = 100;
@@ -24,7 +24,7 @@ public class GeradorGladiador {
       int randVal = GeradorAleatoriedade.gerarNumeroAleatorioEntre(0, pontosDistribuiveis);
       
       // Incrementa o valor do atributo e remove da lista para não preenchê-lo novamente
-      atributos.get(randPos).setValor(atributos.get(randPos).value() + randVal);
+      atributos.get(randPos).setValor(atributos.get(randPos).getValor() + randVal);
       atributos.remove(randPos);
       
       pontosDistribuiveis -= randVal;
